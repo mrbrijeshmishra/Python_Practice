@@ -2,26 +2,27 @@ import random
 
 word_list = ["aardvark", "baboon", "camel"]
 def user_input():
-    rand_word = random.choice(word_list)
-    original_word = rand_word.lower()
+    original_word = random.choice(word_list).lower()
+    remaining_letters = list(original_word)
+    new_word = ["_"] * len(original_word)
     wrong_attempt = 0
-    print(rand_word)
-    word_length = len(rand_word)
-    new_word = ["_"]*word_length
+
+    print(original_word)
     print("Word:","".join(new_word))
 
-    while wrong_attempt < 3 and word_length > 0:
+    while wrong_attempt < 3 and remaining_letters:
 
         c = input("Enter guess alphabet:").lower()
-        if c in rand_word:
+        if c in remaining_letters:
             index = original_word.find(c)
             new_word[index] = c
-            rand_word = rand_word.replace(c,"",1)
+            remaining_letters.remove(c)
+            print(new_word)
         else:
             wrong_attempt +=1
             print(f"It looks like this is your {wrong_attempt} wrong attempt.")
 
-    if len(rand_word) == 0:
+    if not remaining_letters:
         print("Word matched successfully")
         print("Word:","".join(new_word))
     else:
